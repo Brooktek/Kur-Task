@@ -1,29 +1,29 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { Tabs } from 'expo-router';
+import { FontAwesome } from '@expo/vector-icons';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
-
+export default function Layout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Tabs
+      screenOptions={{
+        headerStyle: { backgroundColor: '#6200ea' },
+        headerTintColor: '#fff',
+        tabBarActiveTintColor: '#6200ea',
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: 'Tasks',
+          tabBarIcon: ({ color }) => <FontAwesome name="list" size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="add-task"
+        options={{
+          title: 'Add Task',
+          tabBarIcon: ({ color }) => <FontAwesome name="plus" size={24} color={color} />,
+        }}
+      />
+    </Tabs>
   );
 }
